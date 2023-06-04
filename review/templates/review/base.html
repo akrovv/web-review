@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block title %}
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+  <header>
+    <h1>Отзывы на компьютерные игры</h1>
+    <nav>
+      <ul>
+        <li><a href="{% url 'review:index' %}">Главная</a></li>
+        <li><a href="{% url 'review:genres' %}">Жанры</a></li>
+        <li><a href="{% url 'review:age_categories' %}">Возрастные категории</a></li>
+        <li><a href="{% url 'review:developers' %}">Разработчики</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'loginer:profile' %}">Личный кабинет</a></li>
+        {% else %}
+        <li><a href="{% url 'loginer:login' %}">Войти</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  {% block main %}
+  {% endblock %}
+
+  <footer>
+    <p>Все права защищены &copy; 2023</p>
+  </footer>
+</body>
+</html>

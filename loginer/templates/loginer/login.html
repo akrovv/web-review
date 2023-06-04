@@ -1,0 +1,22 @@
+{% extends 'review/base.html' %}
+
+  {% block title %}
+  <title>Вход</title>
+  {% endblock %}
+
+  {% block main %}
+
+  <main>
+    <h2>Вход</h2>
+  {% if error_message %}
+    <p>{{ error_message }}</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+  </form>
+    <a href="{% url 'loginer:register' %}">Еще не зарегистрированы?</a>
+  </main>
+
+  {% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'review/base.html' %}
+
+  {% block title %}
+  <title>Возрастные категории - Отзывы на компьютерные игры</title>
+  {% endblock %}
+
+  {% block main %}
+  <main>
+    <h2>Возрастные категории</h2>
+    <ul class="dropdown-content">
+      <form method="get" action="{% url 'review:age_categories' %}">
+      {% for age in age_list %}
+        {% if age.age == 100 %}
+          <li><input type="checkbox" id="all" name="age" value="all" {% if 'all' in selected_age %}checked{% endif %}><label for="all">Для всех возрастов</label></li>
+        {% else %}
+          <li><input type="checkbox" id="{{ age.age }}" name="age" value="{{ age.age }}" {% if age.age in selected_age %}checked{% endif %}><label for="{{ age.age }}">{{ age.age }}</label></li>
+        {% endif %}
+      {% endfor %}
+      <input type="submit" value="Выбрать">
+      </form>
+    </ul>
+
+    {% for game in games %}
+    <div class="game-card">
+      <img src="{{ game.img.url }}" alt="Игра 2" width="300px">
+      <h3>{{ game.game_name }}</h3>
+      <h3>Жанр: {{ game.genre }}</h3>
+      <h3>Возраст: {{ game.age }}</h3>
+      <h3>Разработчик: {{ game.developer }}</h3>
+      <p>Описание: {{ game.description | truncatechars:55 }}</p>
+      <a href="{{ game.get_absolute_url }}">Подробнее</a>
+    </div>
+    {% endfor %}
+  </main>
+
+  {% endblock %}

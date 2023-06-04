@@ -1,0 +1,35 @@
+{% extends 'review/base.html' %}
+
+  {% block title %}
+  <title>Жанры - Отзывы на компьютерные игры</title>
+  {% endblock %}
+
+  {% block main %}
+  <main>
+    <h2>Жанры</h2>
+    <ul class="dropdown-content">
+    <form method="get" action="{% url 'review:genres' %}">
+      {% for genre in genres %}
+        <li>
+          <input type="checkbox" id="{{ genre.genre_name }}" name="genre" value="{{ genre.genre_name }}"
+            {% if genre.genre_name in selected_genres %} checked {% endif %}>
+          <label for="{{ genre.genre_name }}">{{ genre.genre_name }}</label>
+        </li>
+      {% endfor %}
+      <input type="submit" value="Выбрать">
+    </form>
+  </ul>
+
+    {% for game in games %}
+    <div class="game-card">
+      <img src="{{ game.img.url }}" alt="Игра 2" width="300px">
+      <h3>{{ game.game_name }}</h3>
+      <h3>Жанр: {{ game.genre }}</h3>
+      <h3>Возраст: {{ game.age }}</h3>
+      <h3>Разработчик: {{ game.developer }}</h3>
+      <p>Описание: {{ game.description | truncatechars:55 }}</p>
+      <a href="{{ game.get_absolute_url }}">Подробнее</a>
+    </div>
+    {% endfor %}
+  </main>
+  {% endblock %}

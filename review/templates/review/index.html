@@ -1,0 +1,29 @@
+{% extends 'review/base.html' %}
+  {% block title %}
+  <title>Отзывы на компьютерные игры</title>
+  {% endblock %}
+
+  {% block main %}
+  <main>
+    <h2>Добро пожаловать!</h2>
+    <p>Выберите интересующую вас категорию:</p>
+    <ul>
+      <li><a href="{% url 'review:genres' %}">Жанры</a></li>
+      <li><a href="{% url 'review:age_categories' %}">Возрастные категории</a></li>
+      <li><a href="{% url 'review:developers' %}">Разработчики</a></li>
+    </ul>
+  </main>
+
+  {% for game in games %}
+  <div class="game-card">
+    <img src="{{ game.img.url }}" alt="Игра 2" width="300px">
+    <h3>{{ game.game_name }}</h3>
+    <h3>Жанр: {{ game.genre }}</h3>
+    <h3>Возраст: {{ game.age }}</h3>
+    <h3>Разработчик: {{ game.developer }}</h3>
+    <p>Описание: {{ game.description | truncatechars:55 }}</p>
+    <a href="{{ game.get_absolute_url }}">Подробнее</a>
+  </div>
+  {% endfor %}
+  {% endblock %}
+

@@ -1,0 +1,54 @@
+{% extends 'review/base.html' %}
+
+{% block title %}
+  <title>Личный кабинет - Отзывы на компьютерные игры</title>
+{% endblock %}
+
+  {% block main %}
+  <main>
+    <h2>Личный кабинет</h2>
+    <p>Добро пожаловать в ваш личный кабинет! Здесь вы можете управлять своими отзывами и настройками.</p>
+
+
+    <form method="post" action="{% url 'loginer:profile' %}">
+      {% csrf_token %}
+
+      <label for="game_name">Название игры:</label>
+      <input type="text" id="game_name" name="game_name" required><br>
+
+      <label for="hours_played">Часы, потраченные на прохождение:</label>
+      <input type="number" id="hours_played" name="hours_played" min="0" required><br>
+
+      <label for="developer">Разработчик:</label>
+      <input type="text" id="developer" name="developer" required><br>
+
+      <button type="submit">Добавить</button>
+    </form>
+
+    <h3>Игры в избранном</h3>
+    <ul>
+      {% for fv in favorite_games %}
+      <li>{{ fv.game_name }}</li>
+      {% empty %}
+      <li>Нет добавленных игр.</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Пройденные игры</h3>
+    <ul>
+      {% for game_passed in user.games.all %}
+      <li>{{ game_passed.game_name }} - {{ game_passed.hours_played }} часов, разработчик: {{ game_passed.developer }}</li>
+      {% empty %}
+      <li>Нет добавленных игр.</li>
+      {% endfor %}
+    </ul>
+
+  </main>
+
+  <form method="post" action="{% url 'loginer:logout' %}">
+      {% csrf_token %}
+      <button type="submit">Выйти</button>
+  </form>
+  {% endblock %}
+
+

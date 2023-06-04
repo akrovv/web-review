@@ -1,0 +1,18 @@
+{% extends 'review/base.html' %}
+
+  {% block title %}
+  <title>Регистрация</title>
+  {% endblock %}
+
+  {% block main %}
+
+  <main>
+    <h2>Регистрация</h2>
+    <form method="post" action="{% url 'loginer:register' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  </main>
+
+  {% endblock %}
